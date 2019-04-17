@@ -1,0 +1,10 @@
+{
+  "expoServerNgrokUrl": "https://xm-npg.jpzcode.calculadora.exp.direct",
+  "packagerNgrokUrl": "https://packager.xm-npg.jpzcode.calculadora.exp.direct",
+  "ngrokPid": 5552,
+  "devToolsPort": 19002,
+  "expoServerPort": 19000,
+  "packagerPort": 19001,
+  "packagerPid": 4420,
+  "webpackServerPort": null
+}
