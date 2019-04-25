@@ -12,7 +12,7 @@ export default class KEy extends Component {
             <TouchableOpacity
                   style={this.props.styles}
                   onPress={this.props.action}>
-                <Text style={this.props.stylesText}> {this.props.text} </Text>
+                  <Text style={this.props.stylesText}> {this.props.text} </Text>
             </TouchableOpacity>
         )
     }
