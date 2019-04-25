@@ -5,11 +5,11 @@ import Key from './components/Key';
 
 export default class App extends React.Component {
 
-  _onPressButton = (x) => {
+  _onPressButton = (x) => { //Botón
     console.log(x);
   }
 
-  render() {
+  render() {  //Componentes
     return (
       <View style={styles.container}>
         <View style={styles.contenedorSuperior}>
@@ -153,8 +153,7 @@ const styles = StyleSheet.create({
   barra: {
     width: 15,
     height: '100%',
-    backgroundColor: '#34D3A6',
+    backgroundColor: '#3EDBAB',
     //#34D3A6
-    //#3EDBAB
   },
 });
