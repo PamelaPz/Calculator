@@ -1,12 +1,26 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 import Key from './components/Key';
 
 export default class App extends React.Component {
 
+  constructor() {
+    super();
+    this.state = {
+      display: '0'
+    }
+  }
+
   _onPressButton = (x) => { //Botón
-    console.log(x);
+    let value = parseFloat(x);
+    if(isNaN(value) && x != '.'){
+      console.log("Entró");
+    }
+    
+    this.setState({
+      display: this.state.display == '0' ? x : this.state.display + x
+    });
   }
 
   render() {  //Componentes
@@ -14,10 +28,10 @@ export default class App extends React.Component {
       <View style={styles.container}>
         <View style={styles.contenedorSuperior}>
           <View style={styles.operaciones}>
-            <Text style={styles.textEO}>800+30</Text>
+            <Text style={styles.textEO}></Text>
           </View>
           <View style={styles.operaciones}>
-            <Text style={styles.textER}>830</Text>
+            <Text style={styles.textER}></Text>
           </View>
         </View>
         
