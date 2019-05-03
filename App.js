@@ -8,19 +8,40 @@ export default class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      display: '0'
+      display: '0',
+      value: null
     }
   }
 
   _onPressButton = (x) => { //Botón
     let value = parseFloat(x);
-    if(isNaN(value) && x != '.'){
-      console.log("Entró");
+    if(x == 'C'){//Borra el último valor
+       this.setState({
+         display: '0',
+         value: null
+       });
     }
+    else {
+      let currentValue = this.state.display;
+      currentValue = currentValue.substring(0, currentValue.length - 1);
+      this.setState({
+        display: currentValue
+      });
+    }
+   
     
-    this.setState({
-      display: this.state.display == '0' ? x : this.state.display + x
-    });
+    if(isNaN(value) && x != '.'){//Identifica si entran símbolos
+      var currentValue = this.state.display;
+      this.setState({
+        display:'0',
+        value: currentValue
+      });
+      }
+    else {
+      this.setState({//Concatenar valores
+        display: this.state.display == '0' ? x : this.state.display + x
+      });
+    }
   }
 
   render() {  //Componentes
