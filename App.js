@@ -1,14 +1,14 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
-import Calculator from './screens/Calculator';
+import MainNavigator from './navigation/MainNavigator';
 
 export default class App extends React.Component {
 
   render() {  //Componentes
     return (
       <View style={styles.container}>
-        <Calculator/>
+        <MainNavigator/>
       </View>
     );
   }

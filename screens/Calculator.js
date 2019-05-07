@@ -6,8 +6,8 @@ import Key from '../components/Key';
 
 export default class App extends React.Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       display: '0',
       value: null
@@ -16,34 +16,32 @@ export default class App extends React.Component {
 
   _onPressButton = (x) => { //Botón
     let value = parseFloat(x);
-    if(x == 'CE'){
-      if (x == 'CE') { //Borra el último valor
-        let currentValue = this.state.display;
-        currentValue = currentValue.substring(0, currentValue.length - 1);
-        this.setState({
-          display: currentValue
-        });
-        console.log(currentValue);
-      } else {
-        this.setState({
-          display: '0',
-          value: null
-        });
-        console.log("Entra al else");
-      }
+    if(x === 'CE'){
+        //let currentValue = this.state.display;
+        //let cValue = currentValue.substring(0, currentValue.length - 1);
+        //this.setState({  display: currentValue,  value = null });
+      this.setState({
+        display: '0',
+        value: 0
+      });
     }
     else if(isNaN(value) && x != '.'){//Identifica si entran símbolos
       var currentValue = this.state.display;
       this.setState({
-        display:'0',
-        value: currentValue
+        display: currentValue,
+        value: null
       });
     }
     else {
       this.setState({//Concatenar valores
         display: this.state.display == '0' ? x : this.state.display + x
       });
+      console.log(x);
     }
+  }
+
+  _navigate = () => {
+    this.props.navigation.navigate('Secret');
   }
 
   render() {  //Componentes
@@ -51,7 +49,9 @@ export default class App extends React.Component {
       <View style={styles.container}>
         <View style={styles.contenedorSuperior}>
           <View style={styles.operaciones}>
-            <Text style={styles.textEO}></Text>
+            <Text style={styles.textEO}>
+            {this.state.display}
+            </Text>
           </View>
           <View style={styles.operaciones}>
             <Text style={styles.textER}></Text>
@@ -61,7 +61,7 @@ export default class App extends React.Component {
         <View style={styles.contenedorInferior}>
           <View style={styles.contenedorNumeros}>
               <View style={styles.column}>
-                <Key action={() => this._onPressButton(9)} styles={styles.numero} stylesText={styles.text} text={"9"}/>
+                <Key action={() => this._navigate()} styles={styles.numero} stylesText={styles.text} text={"9"}/>
                 <Key action={() => this._onPressButton(8)} styles={styles.numero} stylesText={styles.text} text={"8"}/>
                 <Key action={() => this._onPressButton(7)} styles={styles.numero} stylesText={styles.text} text={"7"}/>
               </View>
