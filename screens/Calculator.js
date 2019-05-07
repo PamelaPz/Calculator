@@ -9,39 +9,70 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      display: '0',
-      value: null
+      text: '',
+      first: '',
+      sing: '',
     }
   }
 
-  _onPressButton = (x) => { //Botón
-    let value = parseFloat(x);
-    if(x === 'CE'){
-        let currentValue = this.state.display;
-        currentValue = currentValue.substring(0, currentValue.length - 1);
-        this.setState({  display: currentValue,  value: null });
-        if (currentValue.length <= 0){
-          this.setState({
-            display: '0', value: null
-          });
-        }
-    }
+  values = (x) => {
+    // var numbers = [];
+    // this.setState({ //Concatenar valores
+    //   text: this.state.text == '0' ? x : this.state.text + x
+    // });
 
-    else if(isNaN(value) && x != '.'){//Identifica si entran símbolos
-      var currentValue = this.state.display;
+    if (["+", "-", "*", "/"].indexOf(x) > -1) {
       this.setState({
-        display:'0',
-        value: currentValue
+        sing: x,
+        first: this.state.text,
+        text: ""
       });
-      console.log(currentValue);
+      console.log(this.state.sing);
+      return;
+    } else if (x === "=") {
+      this.Calculate();
+      return;
+    } else if (x === "CE") {
+      this.Clean();
+    } else {
+      this.setState({
+        text: this.state.text + x
+      });
+      console.log(this.state.text);
     }
 
-    else {
-      this.setState({//Concatenar valores
-        display: this.state.display == '0' ? x : this.state.display + x
+  }
+  
+  Clean() {
+      let currentValue = this.state.text;
+      currentValue = currentValue.substring(0, currentValue.length - 1);
+      this.setState({
+        text: currentValue,
+        first: '',
+        sing: '',
       });
-      console.log(x);
+  }
+
+  Calculate = () => { //Botón
+    let result = null;
+    if (this.state.sing == '+') {
+      result = Number(this.state.first) + Number(this.state.text);
+    } else if (this.state.sing == '-') {
+      result = Number(this.state.first) - Number(this.state.text);
+    } else if (this.state.sing == '/') {
+      result = Number(this.state.first) / Number(this.state.text);
+    } else if (this.state.sing == '*') {
+      result = Number(this.state.first) * Number(this.state.text);
+    } else {
+      return
     }
+    result = result.toString();
+    this.setState({
+      text: result,
+      sing: "",
+      first: ""
+    });
+
   }
   
 
@@ -55,12 +86,12 @@ export default class App extends React.Component {
         <View style={styles.contenedorSuperior}>
           <View style={styles.operaciones}>
             <Text style={styles.textEO}>
-            {this.state.display} 
+            {this.state.first + this.state.sing + this.state.text}
             </Text>
           </View>
           <View style={styles.operaciones}>
             <Text style={styles.textER}>
-            {this.state.value}
+            {/* {this.state.value} */}
             </Text>
           </View>
         </View>
@@ -68,40 +99,40 @@ export default class App extends React.Component {
         <View style={styles.contenedorInferior}>
           <View style={styles.contenedorNumeros}>
               <View style={styles.column}>
-                <Key action={() => this.numbers("9")} styles={styles.numero} stylesText={styles.text} text={"9"}/>
-                <Key action={() => this.numbers("8")} styles={styles.numero} stylesText={styles.text} text={"8"}/>
-                <Key action={() => this.numbers("7")} styles={styles.numero} stylesText={styles.text} text={"7"}/>
+                <Key action={() => this.values("9")} styles={styles.numero} stylesText={styles.text} text={"9"}/>
+                <Key action={() => this.values("8")} styles={styles.numero} stylesText={styles.text} text={"8"}/>
+                <Key action={() => this.values("7")} styles={styles.numero} stylesText={styles.text} text={"7"}/>
               </View>
 
               <View style={styles.column}>
-                <Key action={() => this.numbers("6")} styles={styles.numero} stylesText={styles.text} text={"6"}/>
-                <Key action={() => this.numbers("5")} styles={styles.numero} stylesText={styles.text} text={"5"}/>
-                <Key action={() => this.numbers("4")} styles={styles.numero} stylesText={styles.text} text={"4"}/>
+                <Key action={() => this.values("6")} styles={styles.numero} stylesText={styles.text} text={"6"}/>
+                <Key action={() => this.values("5")} styles={styles.numero} stylesText={styles.text} text={"5"}/>
+                <Key action={() => this.values("4")} styles={styles.numero} stylesText={styles.text} text={"4"}/>
               </View>
 
               <View style={styles.column}>
-                <Key action={() => this.numbers("3")} styles={styles.numero} stylesText={styles.text} text={"3"}/>
-                <Key action={() => this.numbers("2")} styles={styles.numero} stylesText={styles.text} text={"2"}/>
-                <Key action={() => this.numbers("1")} styles={styles.numero} stylesText={styles.text} text={"1"}/>
+                <Key action={() => this.values("3")} styles={styles.numero} stylesText={styles.text} text={"3"}/>
+                <Key action={() => this.values("2")} styles={styles.numero} stylesText={styles.text} text={"2"}/>
+                <Key action={() => this.values("1")} styles={styles.numero} stylesText={styles.text} text={"1"}/>
               </View>
 
               <View style={styles.column}>
-                <Key action={() => this.Result("=")} styles={styles.numero} stylesText={styles.text} text={"="}/>
-                <Key action={() => this.numbers("0")} styles={styles.numero} stylesText={styles.text} text={"0"}/>
-                <Key action={() => this.numbers(".")} styles={styles.numero} stylesText={styles.text} text={"."}/>
+                <Key action={() => this.values("=")} styles={styles.numero} stylesText={styles.text} text={"="}/>
+                <Key action={() => this.values("0")} styles={styles.numero} stylesText={styles.text} text={"0"}/>
+                <Key action={() => this.values(".")} styles={styles.numero} stylesText={styles.text} text={"."}/>
               </View>
           </View>
 
           <View style={styles.contenedorOperadores}>
-            <Key action={() => this.Clean("CE")} styles={styles.operador} stylesText={styles.textOp} text={"CE"}/>
-            <Key action={() => this.Operator("/")} styles={styles.operador} stylesText={styles.textOp} text={"/"}/>
-            <Key action={() => this.Operator("*")} styles={styles.operador} stylesText={styles.textOp} text={"*"}/>
-            <Key action={() => this.Operator("-")} styles={styles.operador} stylesText={styles.textOp} text={"-"}/>
-            <Key action={() => this.Operator("+")} styles={styles.operador} stylesText={styles.textOp} text={"+"}/>
+            <Key action={() => this.values("CE")} styles={styles.operador} stylesText={styles.textOp} text={"CE"}/>
+            <Key action={() => this.values("/")} styles={styles.operador} stylesText={styles.textOp} text={"/"}/>
+            <Key action={() => this.values("*")} styles={styles.operador} stylesText={styles.textOp} text={"*"}/>
+            <Key action={() => this.values("-")} styles={styles.operador} stylesText={styles.textOp} text={"-"}/>
+            <Key action={() => this.values("+")} styles={styles.operador} stylesText={styles.textOp} text={"+"}/>
           </View>
 
-          <View action={() => this._navigate()} style={styles.barra}>
-            <Text></Text>
+          <View>
+            <Text action={() => this._navigate()} style={styles.barra}></Text>
           </View>
 
         </View>
