@@ -1,8 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View} from 'react-native';
 
 import Key from '../components/Key';
-//import console = require('console');
 
 export default class App extends React.Component {
 
@@ -16,12 +15,8 @@ export default class App extends React.Component {
   }
 
   values = (x) => {
-    // var numbers = [];
-    // this.setState({ //Concatenar valores
-    //   text: this.state.text == '0' ? x : this.state.text + x
-    // });
 
-    if (["+", "-", "*", "/"].indexOf(x) > -1) {
+    if (["+", "-", "*", "/"].indexOf(x) > -1) { //Guarda el signo 
       this.setState({
         sing: x,
         first: this.state.text,
@@ -29,10 +24,10 @@ export default class App extends React.Component {
       });
       console.log(this.state.sing);
       return;
-    } else if (x === "=") {
+    } else if (x === "=") { //Ejecuta función de operaciones
       this.Calculate();
       return;
-    } else if (x === "CE") {
+    } else if (x === "CE") { //Ejecuta función para limpar
       this.Clean();
     } else {
       this.setState({
@@ -49,11 +44,11 @@ export default class App extends React.Component {
       this.setState({
         text: currentValue,
         first: '',
-        sing: '',
+        sing: ''
       });
   }
 
-  Calculate = () => { //Botón
+  Calculate = () => {
     let result = null;
     if (this.state.sing == '+') {
       result = Number(this.state.first) + Number(this.state.text);
@@ -66,7 +61,7 @@ export default class App extends React.Component {
     } else {
       return
     }
-    result = result.toString();
+    result = result.toString(); //Reseteamos con el resultado
     this.setState({
       text: result,
       sing: "",
@@ -119,7 +114,7 @@ export default class App extends React.Component {
               <View style={styles.column}>
                 <Key action={() => this.values("=")} styles={styles.numero} stylesText={styles.text} text={"="}/>
                 <Key action={() => this.values("0")} styles={styles.numero} stylesText={styles.text} text={"0"}/>
-                <Key action={() => this.values(".")} styles={styles.numero} stylesText={styles.text} text={"."}/>
+                <Key action={() => this._navigate(".")} styles={styles.numero} stylesText={styles.text} text={"."}/>
               </View>
           </View>
 
@@ -131,8 +126,8 @@ export default class App extends React.Component {
             <Key action={() => this.values("+")} styles={styles.operador} stylesText={styles.textOp} text={"+"}/>
           </View>
 
-          <View>
-            <Text action={() => this._navigate()} style={styles.barra}></Text>
+          <View style={styles.barra}>
+            
           </View>
 
         </View>
