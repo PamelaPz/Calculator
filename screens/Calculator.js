@@ -17,21 +17,25 @@ export default class App extends React.Component {
   _onPressButton = (x) => { //Botón
     let value = parseFloat(x);
     if(x === 'CE'){
-        //let currentValue = this.state.display;
-        //let cValue = currentValue.substring(0, currentValue.length - 1);
-        //this.setState({  display: currentValue,  value = null });
-      this.setState({
-        display: '0',
-        value: 0
-      });
+        let currentValue = this.state.display;
+        currentValue = currentValue.substring(0, currentValue.length - 1);
+        this.setState({  display: currentValue,  value: null });
+        if (currentValue.length <= 0){
+          this.setState({
+            display: '0', value: null
+          });
+        }
     }
+
     else if(isNaN(value) && x != '.'){//Identifica si entran símbolos
       var currentValue = this.state.display;
       this.setState({
-        display: currentValue,
-        value: null
+        display:'0',
+        value: currentValue
       });
+      console.log(currentValue);
     }
+
     else {
       this.setState({//Concatenar valores
         display: this.state.display == '0' ? x : this.state.display + x
@@ -39,6 +43,7 @@ export default class App extends React.Component {
       console.log(x);
     }
   }
+  
 
   _navigate = () => {
     this.props.navigation.navigate('Secret');
@@ -50,50 +55,52 @@ export default class App extends React.Component {
         <View style={styles.contenedorSuperior}>
           <View style={styles.operaciones}>
             <Text style={styles.textEO}>
-            {this.state.display}
+            {this.state.display} 
             </Text>
           </View>
           <View style={styles.operaciones}>
-            <Text style={styles.textER}></Text>
+            <Text style={styles.textER}>
+            {this.state.value}
+            </Text>
           </View>
         </View>
         
         <View style={styles.contenedorInferior}>
           <View style={styles.contenedorNumeros}>
               <View style={styles.column}>
-                <Key action={() => this._navigate()} styles={styles.numero} stylesText={styles.text} text={"9"}/>
-                <Key action={() => this._onPressButton(8)} styles={styles.numero} stylesText={styles.text} text={"8"}/>
-                <Key action={() => this._onPressButton(7)} styles={styles.numero} stylesText={styles.text} text={"7"}/>
+                <Key action={() => this.numbers("9")} styles={styles.numero} stylesText={styles.text} text={"9"}/>
+                <Key action={() => this.numbers("8")} styles={styles.numero} stylesText={styles.text} text={"8"}/>
+                <Key action={() => this.numbers("7")} styles={styles.numero} stylesText={styles.text} text={"7"}/>
               </View>
 
               <View style={styles.column}>
-                <Key action={() => this._onPressButton(6)} styles={styles.numero} stylesText={styles.text} text={"6"}/>
-                <Key action={() => this._onPressButton(5)} styles={styles.numero} stylesText={styles.text} text={"5"}/>
-                <Key action={() => this._onPressButton(4)} styles={styles.numero} stylesText={styles.text} text={"4"}/>
+                <Key action={() => this.numbers("6")} styles={styles.numero} stylesText={styles.text} text={"6"}/>
+                <Key action={() => this.numbers("5")} styles={styles.numero} stylesText={styles.text} text={"5"}/>
+                <Key action={() => this.numbers("4")} styles={styles.numero} stylesText={styles.text} text={"4"}/>
               </View>
 
               <View style={styles.column}>
-                <Key action={() => this._onPressButton(3)} styles={styles.numero} stylesText={styles.text} text={"3"}/>
-                <Key action={() => this._onPressButton(2)} styles={styles.numero} stylesText={styles.text} text={"2"}/>
-                <Key action={() => this._onPressButton(1)} styles={styles.numero} stylesText={styles.text} text={"1"}/>
+                <Key action={() => this.numbers("3")} styles={styles.numero} stylesText={styles.text} text={"3"}/>
+                <Key action={() => this.numbers("2")} styles={styles.numero} stylesText={styles.text} text={"2"}/>
+                <Key action={() => this.numbers("1")} styles={styles.numero} stylesText={styles.text} text={"1"}/>
               </View>
 
               <View style={styles.column}>
-                <Key action={() => this._onPressButton("=")} styles={styles.numero} stylesText={styles.text} text={"="}/>
-                <Key action={() => this._onPressButton(0)} styles={styles.numero} stylesText={styles.text} text={"0"}/>
-                <Key action={() => this._onPressButton(".")} styles={styles.numero} stylesText={styles.text} text={"."}/>
+                <Key action={() => this.Result("=")} styles={styles.numero} stylesText={styles.text} text={"="}/>
+                <Key action={() => this.numbers("0")} styles={styles.numero} stylesText={styles.text} text={"0"}/>
+                <Key action={() => this.numbers(".")} styles={styles.numero} stylesText={styles.text} text={"."}/>
               </View>
           </View>
 
           <View style={styles.contenedorOperadores}>
-            <Key action={() => this._onPressButton("CE")} styles={styles.operador} stylesText={styles.textOp} text={"CE"}/>
-            <Key action={() => this._onPressButton("/")} styles={styles.operador} stylesText={styles.textOp} text={"/"}/>
-            <Key action={() => this._onPressButton("*")} styles={styles.operador} stylesText={styles.textOp} text={"*"}/>
-            <Key action={() => this._onPressButton("-")} styles={styles.operador} stylesText={styles.textOp} text={"-"}/>
-            <Key action={() => this._onPressButton("+")} styles={styles.operador} stylesText={styles.textOp} text={"+"}/>
+            <Key action={() => this.Clean("CE")} styles={styles.operador} stylesText={styles.textOp} text={"CE"}/>
+            <Key action={() => this.Operator("/")} styles={styles.operador} stylesText={styles.textOp} text={"/"}/>
+            <Key action={() => this.Operator("*")} styles={styles.operador} stylesText={styles.textOp} text={"*"}/>
+            <Key action={() => this.Operator("-")} styles={styles.operador} stylesText={styles.textOp} text={"-"}/>
+            <Key action={() => this.Operator("+")} styles={styles.operador} stylesText={styles.textOp} text={"+"}/>
           </View>
 
-          <View style={styles.barra}>
+          <View action={() => this._navigate()} style={styles.barra}>
             <Text></Text>
           </View>
 
