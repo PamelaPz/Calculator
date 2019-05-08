@@ -9,22 +9,22 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       text: '',
-      first: '',
-      sing: '',
+      result: null,
+      // sing: '',
     }
   }
 
   values = (x) => {
 
-    if (["+", "-", "*", "/"].indexOf(x) > -1) { //Guarda el signo 
-      this.setState({
-        sing: x,
-        first: this.state.text,
-        text: ""
-      });
-      console.log(this.state.sing);
-      return;
-    } else if (x === "=") { //Ejecuta función de operaciones
+    // if (["+", "-", "*", "/"].indexOf(x) > -1) { //Guarda el signo 
+    //   this.setState({
+    //     sing: x,
+    //     first: this.state.text,
+    //     text: ""
+    //   });
+    //   console.log(this.state.sing);
+    //   return;} else
+     if (x === "=") { //Ejecuta función de operaciones
       this.Calculate();
       return;
     } else if (x === "CE") { //Ejecuta función para limpar
@@ -43,29 +43,54 @@ export default class App extends React.Component {
       currentValue = currentValue.substring(0, currentValue.length - 1);
       this.setState({
         text: currentValue,
-        first: '',
-        sing: ''
+        result: null,
+        // sing: ''
       });
   }
 
   Calculate = () => {
     let result = null;
-    if (this.state.sing == '+') {
-      result = Number(this.state.first) + Number(this.state.text);
-    } else if (this.state.sing == '-') {
-      result = Number(this.state.first) - Number(this.state.text);
-    } else if (this.state.sing == '/') {
-      result = Number(this.state.first) / Number(this.state.text);
-    } else if (this.state.sing == '*') {
-      result = Number(this.state.first) * Number(this.state.text);
+    var sings = ['+', '/', '-', '*'];
+    var text = this.state.text;
+    var _x = '';
+
+    if (text != text.split(sings[0])) {
+      //console.log('suma');
+      x = text.split(sings[0]);
+      for (let i = 0; i < x.length; i++) {
+        console.log(x[i]);
+      }
+    } else if (text != text.split(sings[1])){
+      console.log('división');
+    } else if (text != text.split(sings[2])) {
+      console.log('resta');
+    } else if (text != text.split(sings[3])) {
+      console.log('multiplicación');
     } else {
-      return
+      return 'no válido';
     }
-    result = result.toString(); //Reseteamos con el resultado
+
+    // if(array == '/'){
+    //   console.log("dividir");
+    //   //result = Number(this.state.array[0]) / Number(this.state.array[2]);
+    // }
+
+    // if (this.state.sing == '+') {
+    //   result = Number(this.state.first) + Number(this.state.text);
+    // } else if (this.state.sing == '-') {
+    //   result = Number(this.state.first) - Number(this.state.text);
+    // } else if (this.state.sing == '/') {
+    //   result = Number(this.state.first) / Number(this.state.text);
+    // } else if (this.state.sing == '*') {
+    //   result = Number(this.state.first) * Number(this.state.text);
+    // } else {
+    //   return
+    // }
+    //result = result.toString(); //Reseteamos con el resultado
     this.setState({
-      text: result,
-      sing: "",
-      first: ""
+      text: '',
+      result: result,
+    //   first: ""
     });
 
   }
@@ -81,12 +106,12 @@ export default class App extends React.Component {
         <View style={styles.contenedorSuperior}>
           <View style={styles.operaciones}>
             <Text style={styles.textEO}>
-            {this.state.first + this.state.sing + this.state.text}
+            {this.state.text}
             </Text>
           </View>
           <View style={styles.operaciones}>
             <Text style={styles.textER}>
-            {/* {this.state.value} */}
+            {this.state.result}
             </Text>
           </View>
         </View>
