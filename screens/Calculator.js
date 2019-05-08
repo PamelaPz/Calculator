@@ -50,22 +50,21 @@ export default class App extends React.Component {
 
   Calculate = () => {
     let result = null;
-    var sings = ['+', '/', '-', '*'];
+    //var sings = ['+', '/', '-', '*'];
     var text = this.state.text;
-    var _x = '';
+    //var x = '';
 
-    if (text != text.split(sings[0])) {
-      //console.log('suma');
-      x = text.split(sings[0]);
-      for (let i = 0; i < x.length; i++) {
-        console.log(x[i]);
-      }
-    } else if (text != text.split(sings[1])){
-      console.log('división');
-    } else if (text != text.split(sings[2])) {
-      console.log('resta');
-    } else if (text != text.split(sings[3])) {
-      console.log('multiplicación');
+    if (text != (x = text.split('+'))) {
+      result = Number(x[0]) + Number(x[1]);
+    // } else if (text != text.split('+')){
+    //   x = text.split(sings[0]);
+    //   result = Number(x[0]) + Number(x[1]);
+    // } else if (text != text.split('+')) {
+    //   x = text.split(sings[0]);
+    //   result = Number(x[0]) + Number(x[1]);
+    // } else if (text != text.split('+')) {
+    //   x = text.split(sings[0]);
+    //   result = Number(x[0]) + Number(x[1]);
     } else {
       return 'no válido';
     }
