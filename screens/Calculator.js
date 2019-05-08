@@ -10,27 +10,18 @@ export default class App extends React.Component {
     this.state = {
       text: '',
       result: null,
-      // sing: '',
     }
   }
 
   values = (x) => {
 
-    // if (["+", "-", "*", "/"].indexOf(x) > -1) { //Guarda el signo 
-    //   this.setState({
-    //     sing: x,
-    //     first: this.state.text,
-    //     text: ""
-    //   });
-    //   console.log(this.state.sing);
-    //   return;} else
      if (x === "=") { //Ejecuta función de operaciones
       this.Calculate();
       return;
     } else if (x === "CE") { //Ejecuta función para limpar
       this.Clean();
     } else {
-      this.setState({
+      this.setState({ //Concatenar valores
         text: this.state.text + x
       });
       console.log(this.state.text);
@@ -44,58 +35,34 @@ export default class App extends React.Component {
       this.setState({
         text: currentValue,
         result: null,
-        // sing: ''
       });
   }
 
   Calculate = () => {
     let result = null;
-    //var sings = ['+', '/', '-', '*'];
     var text = this.state.text;
-    //var x = '';
 
     if (text != (x = text.split('+'))) {
       result = Number(x[0]) + Number(x[1]);
-    // } else if (text != text.split('+')){
-    //   x = text.split(sings[0]);
-    //   result = Number(x[0]) + Number(x[1]);
-    // } else if (text != text.split('+')) {
-    //   x = text.split(sings[0]);
-    //   result = Number(x[0]) + Number(x[1]);
-    // } else if (text != text.split('+')) {
-    //   x = text.split(sings[0]);
-    //   result = Number(x[0]) + Number(x[1]);
+    } else if (text != (x = text.split('-'))){
+      result = Number(x[0]) - Number(x[1]);
+    } else if (text != (x = text.split('*'))) {
+      result = Number(x[0]) * Number(x[1]);
+    } else if (text != (x = text.split('/'))) {
+      result = Number(x[0]) / Number(x[1]);
     } else {
       return 'no válido';
     }
 
-    // if(array == '/'){
-    //   console.log("dividir");
-    //   //result = Number(this.state.array[0]) / Number(this.state.array[2]);
-    // }
-
-    // if (this.state.sing == '+') {
-    //   result = Number(this.state.first) + Number(this.state.text);
-    // } else if (this.state.sing == '-') {
-    //   result = Number(this.state.first) - Number(this.state.text);
-    // } else if (this.state.sing == '/') {
-    //   result = Number(this.state.first) / Number(this.state.text);
-    // } else if (this.state.sing == '*') {
-    //   result = Number(this.state.first) * Number(this.state.text);
-    // } else {
-    //   return
-    // }
-    //result = result.toString(); //Reseteamos con el resultado
-    this.setState({
+    this.setState({//Reseteamos con el resultado
       text: '',
       result: result,
-    //   first: ""
     });
 
   }
   
 
-  _navigate = () => {
+  _navigate = () => { //Navigate (Ventana Secreta)
     this.props.navigation.navigate('Secret');
   }
 
@@ -105,12 +72,12 @@ export default class App extends React.Component {
         <View style={styles.contenedorSuperior}>
           <View style={styles.operaciones}>
             <Text style={styles.textEO}>
-            {this.state.text}
+              {this.state.text} {/* Operaciones */}
             </Text>
           </View>
           <View style={styles.operaciones}>
             <Text style={styles.textER}>
-            {this.state.result}
+              {this.state.result} {/* Resultado */}
             </Text>
           </View>
         </View>
